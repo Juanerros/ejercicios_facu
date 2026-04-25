@@ -1,16 +1,13 @@
 #include <stdio.h>
 
 int main() {
-    int num[];
-    int posi, min minPosi, pares;
+  int posi, min, minPosi, pares, num;
 
+  do {
+    printf("Ingresa un numero:\n");
+    scanf("%d", &num);
+    if (num)
+  } while (num != 0);
 
-    do{
-        printf("Ingresa un numero:\n");
-        scanf("%d", &num);
-        if(num)
-    } while(num != 0);
-
-
-    return 0;
+  return 0;
 }
