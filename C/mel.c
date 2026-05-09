@@ -1,16 +1,19 @@
 
 #include <stdio.h>
+int main()
+{
+    int numero, juan;
+    numero = 2;
+    scanf("%d", &juan);
 
-int main() {
-    int num;
-    int num2;
 
-    printf("Ingresa numero: \n");
-    scanf("%d", &num);
-
-    if(num == 4 && num2 == 2 ) {
-        printf("Es 4 y 2");
-    } else {
-        printf("No es 4 y 2");
+    if(numero ==juan ){
+        printf("iguales");
     }
+    
+    else{
+        printf("no son iguales");
+    }
+    
+    return 0;
 }
