@@ -10,7 +10,7 @@ int main()
     if(numero ==juan ){
         printf("iguales");
     }
-    
+     
     else{
         printf("no son iguales");
     }
