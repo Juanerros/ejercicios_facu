@@ -11,58 +11,66 @@ int main() {
 
   int codigosCantidades[10] = {0};
   int cantidades[10] = {0}; // > 0
-  int puedeIngresar = 1;
 
+  printf("\n \n CARGA DE CODIGOS Y PRECIOS: \n");
   // Carga de codigos y precios
   for (int i = 0; i < 10; i++) {
     do {
       int auxCodigo = 0;
       float auxPrecio = 0;
 
-      printf("Ingrese codigo \t");
+      printf("Ingrese codigo: \t");
       scanf("%d", &auxCodigo);
-
-      printf("Ingrese precio unitario \n");
-      scanf("%f", &auxPrecio);
 
       int existe = buscarValor(codigos, auxCodigo);
 
       if (existe != -1) {
-        printf("Error: el codigo ya existe");
+        printf("Error: el codigo ya existe \n");
         reintento = 1;
-      } else if (auxCodigo < 10001 || auxCodigo > 10010) {
-        printf("Error: el codigo debe estar en el rango de 10001 a 10010");
-      } else if (auxPrecio <= 0) {
-        printf("Error: el precio tiene que ser mayor a cero");
+      } else if ((auxCodigo < 10001 || auxCodigo > 10010) && auxCodigo != 0) {
+        printf("Error: el codigo debe estar en el rango de 10001 a 10010 \n");
         reintento = 1;
       } else {
-        reintento = 0;
+        printf("Ingrese precio unitario: ");
+        scanf("%f", &auxPrecio);
 
-        codigos[i] = auxCodigo;
-        precios[i] = auxPrecio;
+        if (auxPrecio <= 0) {
+          printf("Error: el precio tiene que ser mayor a cero \n");
+          reintento = 1;
+        } else {
+          reintento = 0;
+
+          codigos[i] = auxCodigo;
+          precios[i] = auxPrecio;
+        }
       }
     } while (reintento);
   }
 
+  printf("\n \n CARGA DE CODIGOS Y CANTIDADES: \n");
+
   // Carga de codigos y cantidades
   int indice = 0;
+  int puedeIngresar = 1;
   while (puedeIngresar && indice < 10) {
     int auxCodigo = 0;
     int auxCantidad = 0;
 
-    printf("Ingrese codigo: ");
+    printf("Ingrese codigo: \t");
     scanf("%d", &auxCodigo);
 
     if (auxCodigo == 0) {
       puedeIngresar = 0;
     } else {
-      printf("Ingrese cantidad: ");
+      printf("Ingrese cantidad: \n");
       scanf("%d", &auxCantidad);
 
       if (auxCantidad <= 0) {
-        printf("Error: la cantidad debe ser mayor a 0");
+        printf("Error: la cantidad debe ser mayor a 0 \n");
+      } if (auxCodigo == 0 || buscarValor(codigos, auxCodigo) == -1) {
+        printf("Error: el codigo no existe \n");
       } else {
-        codigos[indice] = auxCodigo;
+        codigosCantidades[indice] = auxCodigo;
         cantidades[indice] = auxCantidad;
 
         indice++;
@@ -75,18 +83,21 @@ int main() {
 
   printf("Codigo \t Cantidad \t Importe vendido \n");
   for (int i = 0; i < 10; i++) {
-    if (codigosCantidades[i] != 0) {
-      float precio = precios[buscarValor(codigos, codigosCantidades[i])];
-      float importe = precio * cantidades[i];
+    float precio = precios[buscarValor(codigos, codigosCantidades[i])];
+    float importe = precio * cantidades[i];
 
-      printf("%d %d %f", codigos[i], cantidades[i], importe);
-    }
+    printf("%d \t %d \t \t %f \n", codigos[i], cantidades[i], importe);
   }
 
   // Probabilidad de productos con 1000 unidades
   int cant = contar(codigosCantidades, cantidades);
   float probabilidad = (float)cant / 10 * 100;
-  printf("Probabilidad %f", probabilidad);
+  printf("Porcentaje %f \n", probabilidad);
+
+  // Producto/s que vendio/eron el menor importe
+  for (int i = 0; i < 10; i++) {
+    
+  }
 
   return 0;
 }
@@ -103,7 +114,7 @@ void ordenar(int C[], float P[], int cantidades[]) {
         C[j] = C[j + 1];
         C[j + 1] = aux2;
 
-        int aux3 = P[j];
+        float aux3 = P[j];
         P[j] = P[j + 1];
         P[j + 1] = aux3;
       }
@@ -113,7 +124,7 @@ void ordenar(int C[], float P[], int cantidades[]) {
 
 int buscarValor(int vec[], int valor) {
   for (int i = 0; i < 10; i++) {
-    if (valor == vec[i])
+    if (valor == vec[i] && vec[i] != 0)
       return i;
   }
 
@@ -132,8 +143,9 @@ int contar(int codigosCantidades[], int cantidades[]) {
   }
 
   for (int i = 0; i < 10; i++) {
-    if(acumuladorPorCodigo[i] > 1000) cont++; 
+    if (acumuladorPorCodigo[i] > 1000)
+      cont++;
   }
-  
-  return 0;
+
+  return cont;
 }
